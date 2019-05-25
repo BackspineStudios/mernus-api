@@ -12,14 +12,16 @@ export default class Router {
 
   init() {
 
+    const { router, middleware } = this;
+
     for (const i in actions) {
       const action = actions[i];
       if (action.active) {
-        this.router[action.method](action.path, this.middleware, action.fn);
+        router[action.method](action.path, middleware, action.fn);
       }
     }
 
-    this.router.all('/*', this.middleware, (req, res) => {
+    router.all('/*', middleware, (req, res) => {
       const logger = new Logger(req);
       logger.logError(501, new Error('Invalid route'));
       res.status(501).send({
@@ -27,7 +29,7 @@ export default class Router {
       });
     });
 
-    return this.router;
+    return router;
   }
 
   middleware(req, res, next) {
