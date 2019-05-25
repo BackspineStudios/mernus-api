@@ -1,5 +1,12 @@
 import Server from './server';
-import { httpConfig } from './config';
+import { MongoDB } from './db';
+import { httpConfig, mongoConfig } from './config';
 
 const server = new Server();
-server.init(httpConfig);
+const mongodb = new MongoDB();
+
+(async() => {
+  await mongodb.connect(mongoConfig);
+  server.init(httpConfig);
+})();
+
