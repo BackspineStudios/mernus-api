@@ -4,7 +4,7 @@
   "description": "mernus api",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js test/**/*.js",
+    "test": "./node_modules/jest/bin/jest.js tests --detectOpenHandles",
     "test:watch": "./node_modules/jest/bin/jest.js --watch",
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",

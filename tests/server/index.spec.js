@@ -18,15 +18,15 @@ describe('Server', () => {
     }).toThrow('server: Invalid config');
   });
 
-  it('should init', async() => {
+  it('should init', () => {
     // deactivate logger
     console.log = () => null;
     const server = new Server();
     const config = { port: 3002 };
-    const listener = await server.init(config);
+    const listener = server.init(config);
 
     expect(listener).not.toBe(undefined);
-    expect(listener.toString() === express().listen().toString()).toBe(true);
+    listener.close();
   });
 
 });
