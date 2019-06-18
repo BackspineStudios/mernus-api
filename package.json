@@ -6,6 +6,7 @@
   "scripts": {
     "test": "./node_modules/jest/bin/jest.js tests --detectOpenHandles",
     "test:watch": "./node_modules/jest/bin/jest.js --watch",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/index.js"
