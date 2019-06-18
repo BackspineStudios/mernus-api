@@ -4,7 +4,9 @@
   "description": "mernus api",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "./node_modules/jest/bin/jest.js tests --detectOpenHandles",
+    "test:watch": "./node_modules/jest/bin/jest.js --watch",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/index.js"
@@ -21,6 +23,7 @@
     "@babel/core": "7.4.5",
     "@babel/node": "7.4.5",
     "@babel/preset-env": "7.4.5",
+    "babel-jest": "24.8.0",
     "eslint": "5.16.0",
     "eslint-plugin-chai-friendly": "0.4.1",
     "jest": "24.8.0",

@@ -9,4 +9,3 @@ const mongodb = new MongoDB();
   await mongodb.connect(mongoConfig);
   server.init(httpConfig);
 })();
-

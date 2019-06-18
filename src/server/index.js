@@ -3,6 +3,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import Router from './router';
+import * as actions from '../actions';
 
 export default class Server {
 
@@ -11,6 +12,10 @@ export default class Server {
   }
 
   init(config) {
+
+    if (!config) {
+      throw new Error('server: Invalid config');
+    }
 
     const { app } = this;
 
@@ -24,11 +29,11 @@ export default class Server {
 
     // Load http router
     const router = new Router();
-    app.use(router.init());
+    app.use(router.init(actions));
 
     // Launch server by doing app listen on config.port
     return app.listen(config.port, () => {
-      console.log('Express server listening on port:', config.port);
+      console.log('server: listening on port:', config.port);
     });
   }
 }
