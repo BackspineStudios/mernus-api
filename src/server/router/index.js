@@ -2,26 +2,29 @@
 
 import express from 'express';
 import { Logger, Responder } from '../middleware';
-import * as actions from '../../actions';
 
 export default class Router {
 
   constructor() {
-    this.router = express.Router();
+    this.expressRouter = express.Router();
   }
 
-  init() {
+  init(actions) {
 
-    const { router, middleware } = this;
+    if (!actions) {
+      throw new Error('server.router: no actions loaded');
+    }
+
+    const { expressRouter, middleware } = this;
 
     for (const i in actions) {
       const action = actions[i];
       if (action.active) {
-        router[action.method](action.path, middleware, action.fn);
+        expressRouter[action.method](action.path, middleware, action.fn);
       }
     }
 
-    router.all('/*', middleware, (req, res) => {
+    expressRouter.all('/*', middleware, (req, res) => {
       const logger = new Logger(req);
       logger.logError(501, new Error('Invalid route'));
       res.status(501).send({
@@ -29,7 +32,7 @@ export default class Router {
       });
     });
 
-    return router;
+    return expressRouter;
   }
 
   middleware(req, res, next) {
