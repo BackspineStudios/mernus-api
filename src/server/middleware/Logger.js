@@ -18,6 +18,9 @@ export class Logger {
   }
 
   logError(status, error) {
+    if (!status || !error || !(error instanceof Error)) {
+      throw new Error('Logger.logError: invalid parameters');
+    }
     const { request } = this;
     const endTime = new Date().getTime() - request.startTime.getTime();
     console.error(`Executed [${request.ip}] [${request.method}] ${request.originalUrl} ${error.message} [${status}] ${endTime}ms`);

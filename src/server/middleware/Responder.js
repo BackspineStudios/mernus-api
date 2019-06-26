@@ -12,7 +12,8 @@ export class Responder {
     const { response, logger } = this;
 
     logger.logSuccess();
-    response.status(200).json({
+    response.status(200);
+    response.json({
       result: data || null,
     });
   }
@@ -20,7 +21,7 @@ export class Responder {
   error(code, err) {
     const { response, logger } = this;
     const statusCode = code || 500;
-    let error;
+    let error = err;
 
     if (!(err instanceof Error)) {
 
@@ -28,7 +29,8 @@ export class Responder {
     }
 
     logger.logError();
-    response.status(statusCode).json({
+    response.status(statusCode);
+    response.json({
       error: error.message,
     });
   }
