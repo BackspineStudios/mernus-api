@@ -1,8 +1,8 @@
 import express from 'express';
 import Router from '../../../src/server/router';
-import action from './action.mock';
+import { action } from '../../mocks';
 
-describe('Router', () => {
+describe('Server.Router', () => {
 
   it('should append express router on constructor', () => {
     const router = new Router();
@@ -54,6 +54,23 @@ describe('Router', () => {
 
     expect(expressRouter).not.toBe(undefined);
     expect(expressRouter.toString() === express.Router().toString()).toBe(true);
+  });
+
+  it('middleware should append responder and startTime and log request', () => {
+    const router = new Router();
+    const mock = {
+      req: {},
+      res: {},
+      next: jest.fn(),
+    };
+
+    console.info = jest.fn();
+    router.middleware(...Object.values(mock));
+
+    expect(mock.res).toHaveProperty('responder');
+    expect(mock.req).toHaveProperty('startTime');
+    expect(mock.next).toHaveBeenCalled();
+    expect(console.info).toHaveBeenCalled();
   });
 
 });
